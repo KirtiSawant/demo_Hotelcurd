@@ -1,7 +1,9 @@
 package com.springboot_hotelcurd.demo_Hotelcurd.controller;
 
+import com.springboot_hotelcurd.demo_Hotelcurd.dto.HotelDto;
 import com.springboot_hotelcurd.demo_Hotelcurd.model.Hotel;
 import com.springboot_hotelcurd.demo_Hotelcurd.service.HotelService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +24,14 @@ public class HotelController {
 	}
 
 	@PostMapping("hotel")
-	public Hotel saveHotel(@RequestBody Hotel hotel) {
-		return hotelService.saveHotel(hotel);
+	public HotelDto saveHotel(@RequestBody Hotel hotel) {
+		hotelService.saveHotel(hotel);
+		HotelDto hotelDto = new HotelDto();
+		BeanUtils.copyProperties(hotel, hotelDto);
+		return hotelDto;
 	}
+
+
 	/*
 	@DeleteMapping("hotel/{id}")
 	public List<Hotel> deleteHotel(@PathVariable("id") long id){	
